@@ -1,0 +1,915 @@
+# name: test_matches_snapshot
+  dict({
+    'Outputs': dict({
+      'apiexchangeratesEndpointFF1363D2': dict({
+        'Value': dict({
+          'Fn::Join': list([
+            '',
+            list([
+              'https://',
+              dict({
+                'Ref': 'apiexchangerates0EBB07B3',
+              }),
+              '.execute-api.',
+              dict({
+                'Ref': 'AWS::Region',
+              }),
+              '.',
+              dict({
+                'Ref': 'AWS::URLSuffix',
+              }),
+              '/',
+              dict({
+                'Ref': 'apiexchangeratesDeploymentStageprod5D2EFBD0',
+              }),
+              '/',
+            ]),
+          ]),
+        }),
+      }),
+    }),
+    'Parameters': dict({
+      'BootstrapVersion': dict({
+        'Default': '/cdk-bootstrap/hnb659fds/version',
+        'Description': 'Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]',
+        'Type': 'AWS::SSM::Parameter::Value<String>',
+      }),
+    }),
+    'Resources': dict({
+      'AWSCDKTriggerCustomResourceProviderCustomResourceProviderHandler97BECD91': dict({
+        'DependsOn': list([
+          'AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': 'b5b182c36096f19283e1157c12aed83c585041a5e7c0547e8fe9b548bd22ebf2.zip',
+          }),
+          'Handler': '__entrypoint__.handler',
+          'MemorySize': 128,
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'nodejs14.x',
+          'Timeout': 900,
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'AWSCDKTriggerCustomResourceProviderCustomResourceProviderRoleE18FAF0A': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Sub': 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+            }),
+          ]),
+          'Policies': list([
+            dict({
+              'PolicyDocument': dict({
+                'Statement': list([
+                  dict({
+                    'Action': list([
+                      'lambda:InvokeFunction',
+                    ]),
+                    'Effect': 'Allow',
+                    'Resource': list([
+                      dict({
+                        'Fn::Join': list([
+                          '',
+                          list([
+                            dict({
+                              'Fn::GetAtt': list([
+                                'initexchangeratesEC0F2087',
+                                'Arn',
+                              ]),
+                            }),
+                            ':*',
+                          ]),
+                        ]),
+                      }),
+                    ]),
+                  }),
+                ]),
+                'Version': '2012-10-17',
+              }),
+              'PolicyName': 'Inline',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A': dict({
+        'DependsOn': list([
+          'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB',
+          'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': 'eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip',
+          }),
+          'Handler': 'index.handler',
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'nodejs14.x',
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB': dict({
+        'Properties': dict({
+          'PolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': list([
+                  'logs:PutRetentionPolicy',
+                  'logs:DeleteRetentionPolicy',
+                ]),
+                'Effect': 'Allow',
+                'Resource': '*',
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'PolicyName': 'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB',
+          'Roles': list([
+            dict({
+              'Ref': 'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Policy',
+      }),
+      'apiexchangerates0EBB07B3': dict({
+        'Properties': dict({
+          'Name': 'api-exchange-rates',
+        }),
+        'Type': 'AWS::ApiGateway::RestApi',
+      }),
+      'apiexchangeratesAccount4B852CE4': dict({
+        'DeletionPolicy': 'Retain',
+        'DependsOn': list([
+          'apiexchangerates0EBB07B3',
+        ]),
+        'Properties': dict({
+          'CloudWatchRoleArn': dict({
+            'Fn::GetAtt': list([
+              'apiexchangeratesCloudWatchRole52DFBD08',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'AWS::ApiGateway::Account',
+        'UpdateReplacePolicy': 'Retain',
+      }),
+      'apiexchangeratesCloudWatchRole52DFBD08': dict({
+        'DeletionPolicy': 'Retain',
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'apigateway.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+        'UpdateReplacePolicy': 'Retain',
+      }),
+      'apiexchangeratesDeploymentD29026EAa600d4f67aec734f343f3a24e3cf02b7': dict({
+        'DependsOn': list([
+          'apiexchangeratesexchangeratesGETC3089805',
+          'apiexchangeratesexchangerates4FA011F7',
+        ]),
+        'Properties': dict({
+          'Description': 'Automatically created by the RestApi construct',
+          'RestApiId': dict({
+            'Ref': 'apiexchangerates0EBB07B3',
+          }),
+        }),
+        'Type': 'AWS::ApiGateway::Deployment',
+      }),
+      'apiexchangeratesDeploymentStageprod5D2EFBD0': dict({
+        'DependsOn': list([
+          'apiexchangeratesAccount4B852CE4',
+        ]),
+        'Properties': dict({
+          'DeploymentId': dict({
+            'Ref': 'apiexchangeratesDeploymentD29026EAa600d4f67aec734f343f3a24e3cf02b7',
+          }),
+          'RestApiId': dict({
+            'Ref': 'apiexchangerates0EBB07B3',
+          }),
+          'StageName': 'prod',
+        }),
+        'Type': 'AWS::ApiGateway::Stage',
+      }),
+      'apiexchangeratesexchangerates4FA011F7': dict({
+        'Properties': dict({
+          'ParentId': dict({
+            'Fn::GetAtt': list([
+              'apiexchangerates0EBB07B3',
+              'RootResourceId',
+            ]),
+          }),
+          'PathPart': 'exchangerates',
+          'RestApiId': dict({
+            'Ref': 'apiexchangerates0EBB07B3',
+          }),
+        }),
+        'Type': 'AWS::ApiGateway::Resource',
+      }),
+      'apiexchangeratesexchangeratesGETApiPermissionTestexchangeratestrackingapiexchangerates58F41225GETexchangerates11D6B83E': dict({
+        'Properties': dict({
+          'Action': 'lambda:InvokeFunction',
+          'FunctionName': dict({
+            'Fn::GetAtt': list([
+              'getexchangerates5C11FADA',
+              'Arn',
+            ]),
+          }),
+          'Principal': 'apigateway.amazonaws.com',
+          'SourceArn': dict({
+            'Fn::Join': list([
+              '',
+              list([
+                'arn:',
+                dict({
+                  'Ref': 'AWS::Partition',
+                }),
+                ':execute-api:',
+                dict({
+                  'Ref': 'AWS::Region',
+                }),
+                ':',
+                dict({
+                  'Ref': 'AWS::AccountId',
+                }),
+                ':',
+                dict({
+                  'Ref': 'apiexchangerates0EBB07B3',
+                }),
+                '/test-invoke-stage/GET/exchangerates',
+              ]),
+            ]),
+          }),
+        }),
+        'Type': 'AWS::Lambda::Permission',
+      }),
+      'apiexchangeratesexchangeratesGETApiPermissionexchangeratestrackingapiexchangerates58F41225GETexchangerates7E258D6D': dict({
+        'Properties': dict({
+          'Action': 'lambda:InvokeFunction',
+          'FunctionName': dict({
+            'Fn::GetAtt': list([
+              'getexchangerates5C11FADA',
+              'Arn',
+            ]),
+          }),
+          'Principal': 'apigateway.amazonaws.com',
+          'SourceArn': dict({
+            'Fn::Join': list([
+              '',
+              list([
+                'arn:',
+                dict({
+                  'Ref': 'AWS::Partition',
+                }),
+                ':execute-api:',
+                dict({
+                  'Ref': 'AWS::Region',
+                }),
+                ':',
+                dict({
+                  'Ref': 'AWS::AccountId',
+                }),
+                ':',
+                dict({
+                  'Ref': 'apiexchangerates0EBB07B3',
+                }),
+                '/',
+                dict({
+                  'Ref': 'apiexchangeratesDeploymentStageprod5D2EFBD0',
+                }),
+                '/GET/exchangerates',
+              ]),
+            ]),
+          }),
+        }),
+        'Type': 'AWS::Lambda::Permission',
+      }),
+      'apiexchangeratesexchangeratesGETC3089805': dict({
+        'Properties': dict({
+          'AuthorizationType': 'NONE',
+          'HttpMethod': 'GET',
+          'Integration': dict({
+            'IntegrationHttpMethod': 'POST',
+            'Type': 'AWS_PROXY',
+            'Uri': dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':apigateway:',
+                  dict({
+                    'Ref': 'AWS::Region',
+                  }),
+                  ':lambda:path/2015-03-31/functions/',
+                  dict({
+                    'Fn::GetAtt': list([
+                      'getexchangerates5C11FADA',
+                      'Arn',
+                    ]),
+                  }),
+                  '/invocations',
+                ]),
+              ]),
+            }),
+          }),
+          'ResourceId': dict({
+            'Ref': 'apiexchangeratesexchangerates4FA011F7',
+          }),
+          'RestApiId': dict({
+            'Ref': 'apiexchangerates0EBB07B3',
+          }),
+        }),
+        'Type': 'AWS::ApiGateway::Method',
+      }),
+      'exchangeratesupdateevent657A45F7': dict({
+        'Properties': dict({
+          'Description': 'Daily trigger for exchange rates update lambda function',
+          'ScheduleExpression': 'cron(0 16 * * ? *)',
+          'State': 'ENABLED',
+          'Targets': list([
+            dict({
+              'Arn': dict({
+                'Fn::GetAtt': list([
+                  'updateexchangerates8D26D5CD',
+                  'Arn',
+                ]),
+              }),
+              'Id': 'Target0',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::Events::Rule',
+      }),
+      'exchangeratesupdateeventAllowEventRuleexchangeratestrackingupdateexchangerates3D83FD4AD49A691A': dict({
+        'Properties': dict({
+          'Action': 'lambda:InvokeFunction',
+          'FunctionName': dict({
+            'Fn::GetAtt': list([
+              'updateexchangerates8D26D5CD',
+              'Arn',
+            ]),
+          }),
+          'Principal': 'events.amazonaws.com',
+          'SourceArn': dict({
+            'Fn::GetAtt': list([
+              'exchangeratesupdateevent657A45F7',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'AWS::Lambda::Permission',
+      }),
+      'getexchangerates5C11FADA': dict({
+        'DependsOn': list([
+          'getexchangeratesServiceRoleDefaultPolicyE3D9808C',
+          'getexchangeratesServiceRole96D236B9',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
+          }),
+          'Environment': dict({
+            'Variables': dict({
+              'TABLE_NAME': dict({
+                'Ref': 'tableexchangerates9F49D8C7',
+              }),
+            }),
+          }),
+          'Handler': 'get_exchange_rates.handler',
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'getexchangeratesServiceRole96D236B9',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'python3.8',
+          'Timeout': 30,
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'getexchangeratesLogRetentionADE1F0AF': dict({
+        'Properties': dict({
+          'LogGroupName': dict({
+            'Fn::Join': list([
+              '',
+              list([
+                '/aws/lambda/',
+                dict({
+                  'Ref': 'getexchangerates5C11FADA',
+                }),
+              ]),
+            ]),
+          }),
+          'RetentionInDays': 5,
+          'ServiceToken': dict({
+            'Fn::GetAtt': list([
+              'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'Custom::LogRetention',
+      }),
+      'getexchangeratesServiceRole96D236B9': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'getexchangeratesServiceRoleDefaultPolicyE3D9808C': dict({
+        'Properties': dict({
+          'PolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': list([
+                  'dynamodb:BatchGetItem',
+                  'dynamodb:GetRecords',
+                  'dynamodb:GetShardIterator',
+                  'dynamodb:Query',
+                  'dynamodb:GetItem',
+                  'dynamodb:Scan',
+                  'dynamodb:ConditionCheckItem',
+                  'dynamodb:DescribeTable',
+                ]),
+                'Effect': 'Allow',
+                'Resource': list([
+                  dict({
+                    'Fn::GetAtt': list([
+                      'tableexchangerates9F49D8C7',
+                      'Arn',
+                    ]),
+                  }),
+                  dict({
+                    'Ref': 'AWS::NoValue',
+                  }),
+                ]),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'PolicyName': 'getexchangeratesServiceRoleDefaultPolicyE3D9808C',
+          'Roles': list([
+            dict({
+              'Ref': 'getexchangeratesServiceRole96D236B9',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Policy',
+      }),
+      'initexchangeratesCurrentVersion934DE3F783a4e28007457cbc13a2e3ce4daee02e': dict({
+        'Properties': dict({
+          'FunctionName': dict({
+            'Ref': 'initexchangeratesEC0F2087',
+          }),
+        }),
+        'Type': 'AWS::Lambda::Version',
+      }),
+      'initexchangeratesEC0F2087': dict({
+        'DependsOn': list([
+          'initexchangeratesServiceRoleDefaultPolicy0CC694A3',
+          'initexchangeratesServiceRoleE2A93656',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
+          }),
+          'Environment': dict({
+            'Variables': dict({
+              'TABLE_NAME': dict({
+                'Ref': 'tableexchangerates9F49D8C7',
+              }),
+            }),
+          }),
+          'Handler': 'update_exchange_rates.handler',
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'initexchangeratesServiceRoleE2A93656',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'python3.8',
+          'Timeout': 300,
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'initexchangeratesLogRetention394692CC': dict({
+        'Properties': dict({
+          'LogGroupName': dict({
+            'Fn::Join': list([
+              '',
+              list([
+                '/aws/lambda/',
+                dict({
+                  'Ref': 'initexchangeratesEC0F2087',
+                }),
+              ]),
+            ]),
+          }),
+          'RetentionInDays': 5,
+          'ServiceToken': dict({
+            'Fn::GetAtt': list([
+              'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'Custom::LogRetention',
+      }),
+      'initexchangeratesServiceRoleDefaultPolicy0CC694A3': dict({
+        'Properties': dict({
+          'PolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': list([
+                  'dynamodb:BatchGetItem',
+                  'dynamodb:GetRecords',
+                  'dynamodb:GetShardIterator',
+                  'dynamodb:Query',
+                  'dynamodb:GetItem',
+                  'dynamodb:Scan',
+                  'dynamodb:ConditionCheckItem',
+                  'dynamodb:BatchWriteItem',
+                  'dynamodb:PutItem',
+                  'dynamodb:UpdateItem',
+                  'dynamodb:DeleteItem',
+                  'dynamodb:DescribeTable',
+                ]),
+                'Effect': 'Allow',
+                'Resource': list([
+                  dict({
+                    'Fn::GetAtt': list([
+                      'tableexchangerates9F49D8C7',
+                      'Arn',
+                    ]),
+                  }),
+                  dict({
+                    'Ref': 'AWS::NoValue',
+                  }),
+                ]),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'PolicyName': 'initexchangeratesServiceRoleDefaultPolicy0CC694A3',
+          'Roles': list([
+            dict({
+              'Ref': 'initexchangeratesServiceRoleE2A93656',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Policy',
+      }),
+      'initexchangeratesServiceRoleE2A93656': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'initexchangeratesTrigger2FE5A162': dict({
+        'DeletionPolicy': 'Delete',
+        'DependsOn': list([
+          'tableexchangerates9F49D8C7',
+          'updateexchangeratesLogRetentionAC1B6016',
+          'updateexchangerates8D26D5CD',
+          'updateexchangeratesServiceRoleDefaultPolicy55FA0B31',
+          'updateexchangeratesServiceRole2AAFFA8C',
+        ]),
+        'Properties': dict({
+          'HandlerArn': dict({
+            'Ref': 'initexchangeratesCurrentVersion934DE3F783a4e28007457cbc13a2e3ce4daee02e',
+          }),
+          'ServiceToken': dict({
+            'Fn::GetAtt': list([
+              'AWSCDKTriggerCustomResourceProviderCustomResourceProviderHandler97BECD91',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'Custom::Trigger',
+        'UpdateReplacePolicy': 'Delete',
+      }),
+      'tableexchangerates9F49D8C7': dict({
+        'DeletionPolicy': 'Delete',
+        'Properties': dict({
+          'AttributeDefinitions': list([
+            dict({
+              'AttributeName': 'id',
+              'AttributeType': 'S',
+            }),
+          ]),
+          'KeySchema': list([
+            dict({
+              'AttributeName': 'id',
+              'KeyType': 'HASH',
+            }),
+          ]),
+          'ProvisionedThroughput': dict({
+            'ReadCapacityUnits': 5,
+            'WriteCapacityUnits': 5,
+          }),
+        }),
+        'Type': 'AWS::DynamoDB::Table',
+        'UpdateReplacePolicy': 'Delete',
+      }),
+      'updateexchangerates8D26D5CD': dict({
+        'DependsOn': list([
+          'updateexchangeratesServiceRoleDefaultPolicy55FA0B31',
+          'updateexchangeratesServiceRole2AAFFA8C',
+        ]),
+        'Properties': dict({
+          'Code': dict({
+            'S3Bucket': dict({
+              'Fn::Sub': 'cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}',
+            }),
+            'S3Key': '2c994800135cea0b73c63842370d19aaddc2ffc671ce61256eeef1a5c1f21ce1.zip',
+          }),
+          'Environment': dict({
+            'Variables': dict({
+              'TABLE_NAME': dict({
+                'Ref': 'tableexchangerates9F49D8C7',
+              }),
+            }),
+          }),
+          'Handler': 'update_exchange_rates.handler',
+          'Role': dict({
+            'Fn::GetAtt': list([
+              'updateexchangeratesServiceRole2AAFFA8C',
+              'Arn',
+            ]),
+          }),
+          'Runtime': 'python3.8',
+          'Timeout': 300,
+        }),
+        'Type': 'AWS::Lambda::Function',
+      }),
+      'updateexchangeratesLogRetentionAC1B6016': dict({
+        'Properties': dict({
+          'LogGroupName': dict({
+            'Fn::Join': list([
+              '',
+              list([
+                '/aws/lambda/',
+                dict({
+                  'Ref': 'updateexchangerates8D26D5CD',
+                }),
+              ]),
+            ]),
+          }),
+          'RetentionInDays': 5,
+          'ServiceToken': dict({
+            'Fn::GetAtt': list([
+              'LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A',
+              'Arn',
+            ]),
+          }),
+        }),
+        'Type': 'Custom::LogRetention',
+      }),
+      'updateexchangeratesServiceRole2AAFFA8C': dict({
+        'Properties': dict({
+          'AssumeRolePolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': 'sts:AssumeRole',
+                'Effect': 'Allow',
+                'Principal': dict({
+                  'Service': 'lambda.amazonaws.com',
+                }),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'ManagedPolicyArns': list([
+            dict({
+              'Fn::Join': list([
+                '',
+                list([
+                  'arn:',
+                  dict({
+                    'Ref': 'AWS::Partition',
+                  }),
+                  ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+                ]),
+              ]),
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Role',
+      }),
+      'updateexchangeratesServiceRoleDefaultPolicy55FA0B31': dict({
+        'Properties': dict({
+          'PolicyDocument': dict({
+            'Statement': list([
+              dict({
+                'Action': list([
+                  'dynamodb:BatchGetItem',
+                  'dynamodb:GetRecords',
+                  'dynamodb:GetShardIterator',
+                  'dynamodb:Query',
+                  'dynamodb:GetItem',
+                  'dynamodb:Scan',
+                  'dynamodb:ConditionCheckItem',
+                  'dynamodb:BatchWriteItem',
+                  'dynamodb:PutItem',
+                  'dynamodb:UpdateItem',
+                  'dynamodb:DeleteItem',
+                  'dynamodb:DescribeTable',
+                ]),
+                'Effect': 'Allow',
+                'Resource': list([
+                  dict({
+                    'Fn::GetAtt': list([
+                      'tableexchangerates9F49D8C7',
+                      'Arn',
+                    ]),
+                  }),
+                  dict({
+                    'Ref': 'AWS::NoValue',
+                  }),
+                ]),
+              }),
+            ]),
+            'Version': '2012-10-17',
+          }),
+          'PolicyName': 'updateexchangeratesServiceRoleDefaultPolicy55FA0B31',
+          'Roles': list([
+            dict({
+              'Ref': 'updateexchangeratesServiceRole2AAFFA8C',
+            }),
+          ]),
+        }),
+        'Type': 'AWS::IAM::Policy',
+      }),
+    }),
+    'Rules': dict({
+      'CheckBootstrapVersion': dict({
+        'Assertions': list([
+          dict({
+            'Assert': dict({
+              'Fn::Not': list([
+                dict({
+                  'Fn::Contains': list([
+                    list([
+                      '1',
+                      '2',
+                      '3',
+                      '4',
+                      '5',
+                    ]),
+                    dict({
+                      'Ref': 'BootstrapVersion',
+                    }),
+                  ]),
+                }),
+              ]),
+            }),
+            'AssertDescription': "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+          }),
+        ]),
+      }),
+    }),
+  })
+# ---
